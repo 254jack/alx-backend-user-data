@@ -8,7 +8,7 @@ Authentification
  Weight: 1
  Project will start Apr 10, 2024 6:00 AM, must end by Apr 12, 2024 6:00 AM
  Checker was released at Apr 10, 2024 6:00 PM
- Manual QA review must be done (request it when you are done with the project)
+ Manual QA review must be done (request it whenyou are done with the project)
  An auto review will be launched at the deadline
 
 
