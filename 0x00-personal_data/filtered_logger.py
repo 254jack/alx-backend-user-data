@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-'''logs's module
+'''logs's module 
 '''
 from typing import List, Tuple
 import re
