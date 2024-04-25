@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Db Module
+"""DB Module
 """
 
 from sqlalchemy import create_engine
@@ -10,14 +10,14 @@ from sqlalchemy.exc import InvalidRequestError
 from user import Base, User
 
 
-class Db:
-    """Db class
+class DB:
+    """DB class
     """
 
     def __init__(self):
-        """Initializes a new Db instance
+        """Initializes a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.Db", echo=False)
+        self._engine = create_engine("sqlite:///a.DB", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None

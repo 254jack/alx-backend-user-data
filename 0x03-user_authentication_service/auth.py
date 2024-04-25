@@ -7,7 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
-from Db import Db
+from DB import DB
 from user import User
 import bcrypt
 import uuid
@@ -30,9 +30,9 @@ class Auth:
     """
 
     def __init__(self):
-        """Initializes Db
+        """Initializes DB
         """
-        self._Db = Db()
+        self._Db = DB()
 
     def register_user(self, email: str, password: str) -> User:
         """Takes mandatory string (email, password) arguments

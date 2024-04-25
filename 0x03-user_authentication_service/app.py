@@ -2,7 +2,7 @@
 """App module
 """
 
-from Db import Db
+from DB import DB
 from flask import Flask, jsonify, request, abort, redirect
 from flask.helpers import make_response
 from auth import Auth
