@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Route API module
+route api module
 """
 from os import getenv
 from api.v1.views import app_views
