@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+"""Db Module
+"""
+
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
+from user import Base, User
+
+
+class Db:
+    """Db class
+    """
+
+    def __init__(self):
+        """Initializes a new Db instance
+        """
+        self._engine = create_engine("sqlite:///a.Db", echo=False)
+        Base.metadata.drop_all(self._engine)
+        Base.metadata.create_all(self._engine)
+        self.__session = None
+
+    @property
+    def _session(self):
+        """Private memoized session method (object)
+        """
+        if self.__session is None:
+            DbSession = sessionmaker(bind=self._engine)
+            self.__session = DbSession()
+        return self.__session
+
+    def add_user(self, email: str, hashed_password: str) -> User:
+        """Add new user to database
+        """
+        user = User(email=email, hashed_password=hashed_password)
+        self._session.add(user)
+        self._session.commit()
+        return user
+
+    def find_user_by(self, **kwargs) -> User:
+        """Returns first rrow found in users table
+        """
+        user_keys = ['id', 'email', 'hashed_password', 'session_id',
+                     'reset_token']
+        for key in kwargs.keys():
+            if key not in user_keys:
+                raise InvalidRequestError
+        result = self._session.query(User).filter_by(**kwargs).first()
+        if result is None:
+            raise NoResultFound
+        return result
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Use find_user_by to locate the user to update
+        """
+        user_to_update = self.find_user_by(id=user_id)
+        user_keys = ['id', 'email', 'hashed_password', 'session_id',
+                     'reset_token']
+        for key, value in kwargs.items():
+            if key in user_keys:
+                setattr(user_to_update, key, value)
+            else:
+                raise ValueError
+        self._session.commit()
